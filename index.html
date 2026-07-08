@@ -405,7 +405,6 @@
             function wireStars() {
                 const row = document.getElementById('starRow');
                 const word = document.getElementById('ratingWord');
-                const prompt = document.getElementById('prompt');
                 const btn = document.getElementById('sealBtn');
 
                 row.querySelectorAll('.star').forEach(star => {
@@ -420,8 +419,8 @@
                         star.classList.add('bloom');
                         word.textContent = WORDS[draft];
                         word.classList.add('show');
-                        prompt.textContent = WORDS[draft].toLowerCase() + '…';
                         btn.disabled = false;
+                        btn.textContent = 'Save';
                     });
                 });
             }
