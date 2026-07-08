@@ -3,543 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Devotion Rating</title>
+    <title>Devotion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --ink: #0d0908;
+            --wine: #3a0d1a;
+            --blood: #6b1224;
+            --gold: #c9a25b;
+            --goldlight: #e6c884;
+            --ivory: #ede0d0;
+            --smoke: #a08d82;
+            --serif: 'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, 'Times New Roman', serif;
+            --sans: 'Jost', 'Century Gothic', system-ui, -apple-system, sans-serif;
         }
 
-        :root {
-            --gold: #d4af8a;
-            --dark-plum: #4a3a52;
-            --light-cream: #f5f1ed;
-            --warm-blush: #c49b8d;
-            --deep-burgundy: #6b3e47;
-            --accent-gold: #e8d4b8;
-            --text-dark: #2c2624;
-            --text-light: #8b7b75;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         html, body {
-            width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--light-cream) 0%, #ede8e3 100%);
-            font-family: 'Lora', serif;
-            color: var(--text-dark);
-            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--serif);
+            color: var(--ivory);
+            background:
+                radial-gradient(ellipse 90% 60% at 50% -10%, rgba(107, 18, 36, 0.55), transparent 60%),
+                radial-gradient(ellipse 70% 50% at 50% 115%, rgba(58, 13, 26, 0.6), transparent 60%),
+                var(--ink);
+            background-attachment: fixed;
+            min-height: 100%;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            padding: clamp(28px, 6vw, 72px) 20px 64px;
+            display: flex;
+            justify-content: center;
         }
 
         body::before {
-            content: '';
+            content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 138, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 80%, rgba(107, 62, 71, 0.06) 0%, transparent 50%);
+            inset: 0;
             pointer-events: none;
-            z-index: -1;
+            background: radial-gradient(ellipse 80% 80% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+            z-index: 0;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        .page {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 560px;
+            opacity: 0;
+            animation: rise 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInDown 0.8s ease-out;
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3em;
-            color: var(--dark-plum);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .header p {
-            color: var(--text-light);
-            font-size: 1.1em;
-            font-style: italic;
-            margin-bottom: 5px;
-        }
-
-        .header .subtext {
-            color: var(--warm-blush);
-            font-size: 0.95em;
-            letter-spacing: 1px;
+        .eyebrow {
+            font-family: var(--sans);
+            font-weight: 400;
+            font-size: 11px;
+            letter-spacing: 0.42em;
             text-transform: uppercase;
-        }
-
-        /* Main Content */
-        .main {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        /* Rating Section */
-        .rating-section {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 138, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .rating-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4em;
-            color: var(--dark-plum);
-            margin-bottom: 30px;
+            color: var(--gold);
             text-align: center;
-            letter-spacing: 1px;
+            opacity: 0.85;
         }
 
-        /* Star Rating Slider */
-        .star-input-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 40px;
+        .title {
+            font-weight: 500;
+            font-size: clamp(58px, 17vw, 92px);
+            line-height: 0.9;
+            text-align: center;
+            letter-spacing: 0.01em;
+            margin: 14px 0 10px;
+            background: linear-gradient(180deg, var(--ivory) 30%, var(--gold) 140%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .star-display {
+        .sub {
+            text-align: center;
+            font-style: italic;
+            font-size: clamp(17px, 4.4vw, 21px);
+            color: var(--smoke);
+            font-weight: 400;
+        }
+
+        .rule {
+            height: 1px;
+            margin: 30px auto;
+            max-width: 120px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.55;
+        }
+
+        .card {
+            border: 1px solid rgba(201, 162, 91, 0.28);
+            background: linear-gradient(180deg, rgba(58, 13, 26, 0.34), rgba(13, 9, 8, 0.34));
+            border-radius: 3px;
+            padding: clamp(26px, 6vw, 40px) clamp(22px, 5vw, 36px);
+            box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(230, 200, 132, 0.08);
+        }
+
+        .today-date {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            color: var(--smoke);
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .prompt {
+            text-align: center;
+            font-style: italic;
+            font-size: 23px;
+            color: var(--ivory);
+            margin-bottom: 26px;
+            min-height: 30px;
+            transition: opacity 0.4s;
+        }
+
+        /* stars */
+        .stars {
             display: flex;
-            gap: 12px;
             justify-content: center;
-            min-height: 60px;
-            align-items: center;
+            gap: clamp(8px, 3vw, 16px);
+            margin-bottom: 8px;
         }
 
         .star {
-            font-size: 2.5em;
+            width: clamp(38px, 11vw, 52px);
+            height: clamp(38px, 11vw, 52px);
+            background: none;
+            border: none;
+            padding: 0;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-            user-select: none;
-        }
-
-        .star:hover {
-            transform: scale(1.15) translateY(-4px);
-            filter: drop-shadow(0 6px 12px rgba(212, 175, 138, 0.4));
-        }
-
-        .star.empty {
-            opacity: 0.3;
-            color: var(--text-light);
-        }
-
-        .star.filled {
-            opacity: 1;
             color: var(--gold);
-            animation: starPulse 0.5s ease-out;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        @keyframes starPulse {
+        .star svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        .star .fill {
+            fill: transparent;
+            stroke: rgba(201, 162, 91, 0.55);
+            stroke-width: 1.2;
+            transition: fill 0.5s ease, filter 0.5s ease, stroke 0.5s ease;
+        }
+
+        .star.lit .fill {
+            fill: url(#goldgrad);
+            stroke: var(--goldlight);
+            filter: drop-shadow(0 0 9px rgba(230, 200, 132, 0.55));
+        }
+
+        .stars.selectable .star:hover {
+            transform: translateY(-4px) scale(1.06);
+        }
+
+        .stars.selectable .star:active {
+            transform: scale(0.94);
+        }
+
+        .star.bloom {
+            animation: bloom 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes bloom {
             0% {
-                transform: scale(0.8);
+                transform: scale(0.7);
             }
-            50% {
-                transform: scale(1.1);
+            55% {
+                transform: scale(1.22);
             }
             100% {
                 transform: scale(1);
             }
         }
 
-        /* Slider */
-        .slider-container {
-            margin: 30px 0;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(to right,
-                var(--text-light),
-                var(--warm-blush),
-                var(--gold));
-            border-radius: 5px;
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--gold);
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(212, 175, 138, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 6px 16px rgba(212, 175, 138, 0.7);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--gold);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 12px rgba(212, 175, 138, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        input[type="range"]::-moz-range-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 6px 16px rgba(212, 175, 138, 0.7);
-        }
-
-        .rating-value {
+        .rating-word {
             text-align: center;
-            margin-top: 15px;
-            font-size: 1.1em;
-            color: var(--warm-blush);
-            font-weight: 600;
-        }
-
-        /* Date Display */
-        .date-display {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 0.95em;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--warm-blush) 100%);
-            color: var(--text-dark);
-            border: none;
-            padding: 14px 40px;
-            border-radius: 50px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1em;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 6px 20px rgba(212, 175, 138, 0.4);
-            font-weight: 600;
-            align-self: center;
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
+            color: var(--gold);
+            min-height: 16px;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 138, 0.6);
+        .rating-word.show {
+            opacity: 0.9;
         }
 
-        .submit-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(212, 175, 138, 0.4);
+        .seal-btn {
+            margin-top: 22px;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(107, 18, 36, 0.9), rgba(58, 13, 26, 0.9));
+            color: var(--ivory);
+            font-family: var(--sans);
+            font-size: 12px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.35s;
         }
 
-        .submit-btn:disabled {
-            opacity: 0.5;
+        .seal-btn:hover:not(:disabled) {
+            background: linear-gradient(180deg, var(--blood), var(--wine));
+            box-shadow: 0 0 30px -8px rgba(201, 162, 91, 0.5);
+            letter-spacing: 0.34em;
+        }
+
+        .seal-btn:disabled {
+            opacity: 0.35;
             cursor: not-allowed;
         }
 
-        /* Stats Section */
-        .stats-section {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 138, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        .stat-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2em;
-            color: var(--dark-plum);
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-
-        /* Stats Content */
-        .stats-content {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .stat-item {
+        /* treasury */
+        .treasury {
             text-align: center;
-            flex: 1;
-            min-width: 100px;
+            margin: 44px 0 8px;
         }
 
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2em;
-            color: var(--gold);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-size: 0.9em;
+        .treasury .label {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.36em;
             text-transform: uppercase;
+            color: var(--smoke);
+        }
+
+        .treasury .total {
+            font-size: clamp(70px, 22vw, 110px);
+            line-height: 1;
+            font-weight: 500;
+            margin: 6px 0 2px;
+            color: var(--goldlight);
+            text-shadow: 0 0 40px rgba(201, 162, 91, 0.4);
+        }
+
+        .treasury .total-sub {
+            font-style: italic;
+            color: var(--gold);
+            font-size: 19px;
+        }
+
+        .ledger-head {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.36em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            margin: 48px 0 20px;
+        }
+
+        .entry {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 4px;
+            border-top: 1px solid rgba(201, 162, 91, 0.14);
+        }
+
+        .entry:last-child {
+            border-bottom: 1px solid rgba(201, 162, 91, 0.14);
+        }
+
+        .entry .date {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--smoke);
+            width: 78px;
+            flex-shrink: 0;
+            padding-top: 5px;
+            line-height: 1.4;
+        }
+
+        .entry .body {
+            flex: 1;
+        }
+
+        .entry .ministars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 4px;
+        }
+
+        .entry .ministars span {
+            color: var(--gold);
+            font-size: 15px;
             letter-spacing: 1px;
         }
 
-        /* Timeline */
-        .timeline {
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
+        .entry .ministars .empty {
+            color: rgba(201, 162, 91, 0.25);
         }
 
-        .timeline::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .timeline::-webkit-scrollbar-track {
-            background: rgba(212, 175, 138, 0.1);
-            border-radius: 10px;
-        }
-
-        .timeline::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        .timeline-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(212, 175, 138, 0.2);
-            animation: slideInLeft 0.5s ease-out backwards;
-        }
-
-        .timeline-item:last-child {
-            border-bottom: none;
-        }
-
-        .timeline-date {
-            color: var(--text-light);
-            font-size: 0.85em;
-            min-width: 80px;
-            font-weight: 600;
-        }
-
-        .timeline-stars {
-            display: flex;
-            gap: 4px;
-            font-size: 1.2em;
-        }
-
-        .timeline-stars .star {
-            cursor: default;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .rating-section {
-                padding: 30px;
-            }
-
-            .stat-card {
-                padding: 25px;
-            }
-
-            .star {
-                font-size: 2em;
-            }
-
-            .rating-label {
-                font-size: 1.1em;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--warm-blush) 100%);
-            color: var(--text-dark);
-            padding: 16px 24px;
-            border-radius: 50px;
-            box-shadow: 0 8px 24px rgba(212, 175, 138, 0.4);
-            animation: slideUp 0.5s ease-out, slideDown 0.5s ease-out 2.5s forwards;
-            font-size: 0.95em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            z-index: 1000;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-        }
-
-        .empty-state {
+        .empty-ledger {
             text-align: center;
-            color: var(--text-light);
             font-style: italic;
-            padding: 20px;
+            color: var(--smoke);
+            font-size: 18px;
+            padding: 8px 0 4px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 52px;
+            font-family: var(--sans);
+            font-size: 10px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(160, 141, 130, 0.5);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Daily Devotion</h1>
-            <p>A measure of dedication</p>
-            <div class="subtext">From Becky With Care</div>
-        </div>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f3dca0" />
+                <stop offset="55%" stop-color="#e6c884" />
+                <stop offset="100%" stop-color="#b8893f" />
+            </linearGradient>
+        </defs>
+    </svg>
 
-        <div class="main">
-            <div class="rating-section">
-                <div class="date-display" id="dateDisplay"></div>
-                <div class="rating-label">Rate Today</div>
+    <main class="page">
+        <div class="eyebrow">In her keeping</div>
+        <h1 class="title">Devotion</h1>
+        <p class="sub">your nightly rating</p>
 
-                <div class="star-input-wrapper">
-                    <div class="star-display" id="starDisplay"></div>
-                </div>
+        <div class="rule"></div>
 
-                <div class="slider-container">
-                    <input type="range" id="ratingSlider" min="0" max="5" value="0" step="1">
-                    <div class="rating-value"><span id="ratingValue">0</span> / 5</div>
-                </div>
+        <section class="card" id="tonight" aria-live="polite"></section>
 
-                <button class="submit-btn" id="submitBtn">Submit Rating</button>
-            </div>
+        <section class="treasury">
+            <div class="label">Stars earned</div>
+            <div class="total" id="totalStars">0</div>
+            <div class="total-sub" id="totalSub">not one given yet</div>
+        </section>
 
-            <div class="stats-section">
-                <div class="stat-card">
-                    <h2>Summary</h2>
-                    <div class="stats-content">
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalRatings">0</div>
-                            <div class="stat-label">Total Ratings</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="averageRating">0.0</div>
-                            <div class="stat-label">Average</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalStars">0</div>
-                            <div class="stat-label">Total Stars</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="ledger-head">The record</div>
+        <section id="ledger"></section>
 
-                <div class="stat-card">
-                    <h2>Recent Ratings</h2>
-                    <div class="timeline" id="timeline">
-                        <div class="empty-state">No ratings yet. Submit one to begin.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div class="footer">Hers to give · yours to keep</div>
+    </main>
+
+    <script>
+        (function() {
+            const KEY = 'devotion-log';
+            const STAR_PATH = "M24 2 L30.2 16.4 L46 17.8 L34 28.4 L37.6 44 L24 35.6 L10.4 44 L14 28.4 L2 17.8 L17.8 16.4 Z";
+            const WORDS = ["", "Barely", "Wanting", "Adequate", "Pleasing", "Exquisite"];
+
+            let log = {};
+            let draft = 0;
+            let amending = false;
+
+            const todayKey = () => {
+                const d = new Date();
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            };
+
+            const fmtDate = (key, opts) => {
+                const [y, m, d] = key.split('-').map(Number);
+                return new Date(y, m - 1, d).toLocaleDateString('en-US', opts);
+            };
+
+            async function loadLog() {
+                try {
+                    const r = await window.storage?.get(KEY);
+                    if (r && r.value) log = JSON.parse(r.value);
+                } catch (e) {
+                    const stored = localStorage.getItem(KEY);
+                    if (stored) log = JSON.parse(stored);
+                }
+            }
+
+            async function saveLog() {
+                try {
+                    if (window.storage?.set) await window.storage.set(KEY, JSON.stringify(log));
+                    else localStorage.setItem(KEY, JSON.stringify(log));
+                } catch (e) {
+                    console.error('Could not save', e);
+                }
+            }
+
+            function starButtons(count, selectable) {
+                let html = `<div class="stars${selectable ? ' selectable' : ''}" id="starRow">`;
+                for (let i = 1; i <= 5; i++) {
+                    html += `<button class="star${i <= count ? ' lit' : ''}" data-i="${i}" ${selectable ? '' : 'tabindex="-1" aria-hidden="true"'} aria-label="${i} star${i > 1 ? 's' : ''}">
+                        <svg viewBox="0 0 48 46"><path class="fill" d="${STAR_PATH}"/></svg></button>`;
+                }
+                html += `</div>`;
+                return html;
+            }
+
+            function paint(count) {
+                document.querySelectorAll('#starRow .star').forEach(s => {
+                    s.classList.toggle('lit', Number(s.dataset.i) <= count);
+                });
+            }
+
+            function renderTonight() {
+                const el = document.getElementById('tonight');
+                const tk = todayKey();
+                const sealed = log[tk];
+                const dateLabel = fmtDate(tk, { weekday: 'long', month: 'long', day: 'numeric' });
+
+                if (sealed && !amending) {
+                    el.classList.add('sealed');
+                    el.innerHTML = `
+                        <div class="today-date">${dateLabel}</div>
+                        <div class="prompt">Tonight's rating, sealed.</div>
+                        ${starButtons(sealed.stars, false)}
+                        <div class="rating-word show">${WORDS[sealed.stars]}</div>
+                        <button class="seal-btn amend" id="amendBtn" style="margin-top:28px;background:none;border:none;color:var(--smoke);font-size:10px;padding:8px 0;box-shadow:none;">Change this rating</button>
+                    `;
+                    document.getElementById('amendBtn').addEventListener('click', () => {
+                        amending = true;
+                        draft = sealed.stars;
+                        renderTonight();
+                    });
+                    return;
+                }
+
+                const existing = sealed || {};
+                if (amending && draft === 0) draft = existing.stars || 0;
+                el.innerHTML = `
+                    <div class="today-date">${dateLabel}</div>
+                    <div class="prompt" id="prompt">${draft ? WORDS[draft].toLowerCase() + '…' : 'awaiting your rating'}</div>
+                    ${starButtons(draft, true)}
+                    <div class="rating-word${draft ? ' show' : ''}" id="ratingWord">${draft ? WORDS[draft] : ''}</div>
+                    <button class="seal-btn" id="sealBtn" ${draft ? '' : 'disabled'}>Record this rating</button>
+                `;
+                wireStars();
+                document.getElementById('sealBtn').addEventListener('click', seal);
+            }
+
+            function wireStars() {
+                const row = document.getElementById('starRow');
+                const word = document.getElementById('ratingWord');
+                const prompt = document.getElementById('prompt');
+                const btn = document.getElementById('sealBtn');
+
+                row.querySelectorAll('.star').forEach(star => {
+                    const i = Number(star.dataset.i);
+                    star.addEventListener('mouseenter', () => paint(i));
+                    star.addEventListener('mouseleave', () => paint(draft));
+                    star.addEventListener('click', () => {
+                        draft = i;
+                        paint(draft);
+                        star.classList.remove('bloom');
+                        void star.offsetWidth;
+                        star.classList.add('bloom');
+                        word.textContent = WORDS[draft];
+                        word.classList.add('show');
+                        prompt.textContent = WORDS[draft].toLowerCase() + '…';
+                        btn.disabled = false;
+                    });
+                });
+            }
+
+            async function seal() {
+                if (!draft) return;
+                log[todayKey()] = { stars: draft, sealedAt: new Date().toISOString() };
+                await saveLog();
+
+                const lit = document.querySelectorAll('#starRow .star.lit');
+                lit.forEach((s, idx) => {
+                    setTimeout(() => {
+                        s.classList.remove('bloom');
+                        void s.offsetWidth;
+                        s.classList.add('bloom');
+                    }, idx * 90);
+                });
+
+                amending = false;
+                draft = 0;
+                setTimeout(() => {
+                    renderTonight();
+                    renderTreasury(true);
+                    renderLedger();
+                }, lit.length * 90 + 260);
+            }
+
+            function stats() {
+                const keys = Object.keys(log);
+                let total = 0;
+                keys.forEach(k => (total += log[k].stars || 0));
+                return { total, nights: keys.length };
+            }
+
+            function renderTreasury(animate) {
+                const s = stats();
+                const totalEl = document.getElementById('totalStars');
+                const sub = document.getElementById('totalSub');
+
+                if (animate) countUp(totalEl, s.total);
+                else totalEl.textContent = s.total;
+
+                sub.textContent = s.total === 0 ? 'not one given yet' : (s.total === 1 ? 'a single star, so far' : `across ${s.nights} night${s.nights > 1 ? 's' : ''}`);
+            }
+
+            function countUp(el, to) {
+                const from = Number(el.textContent) || 0;
+                if (from === to) {
+                    el.textContent = to;
+                    return;
+                }
+                const dur = 900,
+                    t0 = performance.now();
+
+                function frame(now) {
+                    const p = Math.min(1, (now - t0) / dur);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.round(from + (to - from) * eased);
+                    if (p < 1) requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+            }
+
+            function renderLedger() {
+                const el = document.getElementById('ledger');
+                const keys = Object.keys(log)
+                    .sort()
+                    .reverse();
+                if (keys.length === 0) {
+                    el.innerHTML = `<div class="empty-ledger">No nights recorded yet.</div>`;
+                    return;
+                }
+                el.innerHTML = keys
+                    .map(k => {
+                        const e = log[k];
+                        let mini = '';
+                        for (let i = 1; i <= 5; i++) {
+                            mini += `<span class="${i <= e.stars ? '' : 'empty'}">${i <= e.stars ? '★' : '☆'}</span>`;
+                        }
+                        return `<div class="entry">
+                            <div class="date">${fmtDate(k, { month: 'short', day: 'numeric' })}<br>${fmtDate(k, { weekday: 'short' })}</div>
+                            <div class="body"><div class="ministars">${mini}</div></div>
+                        </div>`;
+                    })
+                    .join('');
+            }
+
+            async function init() {
+                await loadLog();
+                renderTonight();
+                renderTreasury(false);
+                renderLedger();
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>
 
     <script>
         class RatingApp {
