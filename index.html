@@ -75,44 +75,14 @@
             }
         }
 
-        .eyebrow {
-            font-family: var(--sans);
-            font-weight: 400;
-            font-size: 11px;
-            letter-spacing: 0.42em;
-            text-transform: uppercase;
-            color: var(--gold);
-            text-align: center;
-            opacity: 0.85;
-        }
-
         .title {
             font-weight: 500;
-            font-size: clamp(58px, 17vw, 92px);
+            font-size: clamp(48px, 14vw, 80px);
             line-height: 0.9;
             text-align: center;
             letter-spacing: 0.01em;
-            margin: 14px 0 10px;
-            background: linear-gradient(180deg, var(--ivory) 30%, var(--gold) 140%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .sub {
-            text-align: center;
-            font-style: italic;
-            font-size: clamp(17px, 4.4vw, 21px);
-            color: var(--smoke);
-            font-weight: 400;
-        }
-
-        .rule {
-            height: 1px;
-            margin: 30px auto;
-            max-width: 120px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            opacity: 0.55;
+            margin: 0 0 40px;
+            color: var(--ivory);
         }
 
         .card {
@@ -274,11 +244,6 @@
             text-shadow: 0 0 40px rgba(201, 162, 91, 0.4);
         }
 
-        .treasury .total-sub {
-            font-style: italic;
-            color: var(--gold);
-            font-size: 19px;
-        }
 
         .ledger-head {
             font-family: var(--sans);
@@ -342,16 +307,6 @@
             padding: 8px 0 4px;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 52px;
-            font-family: var(--sans);
-            font-size: 10px;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: rgba(160, 141, 130, 0.5);
-        }
-
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -372,24 +327,17 @@
     </svg>
 
     <main class="page">
-        <div class="eyebrow">In her keeping</div>
         <h1 class="title">Devotion</h1>
-        <p class="sub">your nightly rating</p>
-
-        <div class="rule"></div>
 
         <section class="card" id="tonight" aria-live="polite"></section>
 
         <section class="treasury">
-            <div class="label">Stars earned</div>
+            <div class="label">Stars</div>
             <div class="total" id="totalStars">0</div>
-            <div class="total-sub" id="totalSub">not one given yet</div>
         </section>
 
-        <div class="ledger-head">The record</div>
+        <div class="ledger-head">Record</div>
         <section id="ledger"></section>
-
-        <div class="footer">Hers to give · yours to keep</div>
     </main>
 
     <script>
@@ -540,12 +488,9 @@
             function renderTreasury(animate) {
                 const s = stats();
                 const totalEl = document.getElementById('totalStars');
-                const sub = document.getElementById('totalSub');
 
                 if (animate) countUp(totalEl, s.total);
                 else totalEl.textContent = s.total;
-
-                sub.textContent = s.total === 0 ? 'not one given yet' : (s.total === 1 ? 'a single star, so far' : `across ${s.nights} night${s.nights > 1 ? 's' : ''}`);
             }
 
             function countUp(el, to) {
