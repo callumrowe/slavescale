@@ -224,35 +224,21 @@
         /* treasury */
         .treasury {
             text-align: center;
-            margin: 44px 0 8px;
-        }
-
-        .treasury .label {
-            font-family: var(--sans);
-            font-size: 11px;
-            letter-spacing: 0.36em;
-            text-transform: uppercase;
-            color: var(--smoke);
+            margin: 48px 0 44px;
         }
 
         .treasury .total {
             font-size: clamp(70px, 22vw, 110px);
             line-height: 1;
             font-weight: 500;
-            margin: 6px 0 2px;
             color: var(--goldlight);
             text-shadow: 0 0 40px rgba(201, 162, 91, 0.4);
         }
 
 
         .ledger-head {
-            font-family: var(--sans);
-            font-size: 11px;
-            letter-spacing: 0.36em;
-            text-transform: uppercase;
-            color: var(--gold);
-            text-align: center;
-            margin: 48px 0 20px;
+            margin: 0;
+            height: 12px;
         }
 
         .entry {
@@ -332,11 +318,10 @@
         <section class="card" id="tonight" aria-live="polite"></section>
 
         <section class="treasury">
-            <div class="label">Stars</div>
             <div class="total" id="totalStars">0</div>
         </section>
 
-        <div class="ledger-head">Record</div>
+        <div class="ledger-head"></div>
         <section id="ledger"></section>
     </main>
 
@@ -399,16 +384,14 @@
                 const el = document.getElementById('tonight');
                 const tk = todayKey();
                 const sealed = log[tk];
-                const dateLabel = fmtDate(tk, { weekday: 'long', month: 'long', day: 'numeric' });
+                const dateLabel = fmtDate(tk, { weekday: 'short', month: 'short', day: 'numeric' });
 
                 if (sealed && !amending) {
                     el.classList.add('sealed');
                     el.innerHTML = `
                         <div class="today-date">${dateLabel}</div>
-                        <div class="prompt">Tonight's rating, sealed.</div>
                         ${starButtons(sealed.stars, false)}
-                        <div class="rating-word show">${WORDS[sealed.stars]}</div>
-                        <button class="seal-btn amend" id="amendBtn" style="margin-top:28px;background:none;border:none;color:var(--smoke);font-size:10px;padding:8px 0;box-shadow:none;">Change this rating</button>
+                        <button class="seal-btn amend" id="amendBtn" style="margin-top:28px;background:none;border:none;color:var(--smoke);font-size:10px;padding:8px 0;box-shadow:none;">change</button>
                     `;
                     document.getElementById('amendBtn').addEventListener('click', () => {
                         amending = true;
@@ -422,10 +405,9 @@
                 if (amending && draft === 0) draft = existing.stars || 0;
                 el.innerHTML = `
                     <div class="today-date">${dateLabel}</div>
-                    <div class="prompt" id="prompt">${draft ? WORDS[draft].toLowerCase() + '…' : 'awaiting your rating'}</div>
                     ${starButtons(draft, true)}
                     <div class="rating-word${draft ? ' show' : ''}" id="ratingWord">${draft ? WORDS[draft] : ''}</div>
-                    <button class="seal-btn" id="sealBtn" ${draft ? '' : 'disabled'}>Record this rating</button>
+                    <button class="seal-btn" id="sealBtn" ${draft ? '' : 'disabled'}>${draft ? 'Save' : '—'}</button>
                 `;
                 wireStars();
                 document.getElementById('sealBtn').addEventListener('click', seal);
