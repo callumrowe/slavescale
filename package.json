@@ -1,0 +1,9 @@
+{
+  "name": "slavescale",
+  "version": "1.0.0",
+  "description": "Daily devotion rating tracker",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build needed'"
+  }
+}

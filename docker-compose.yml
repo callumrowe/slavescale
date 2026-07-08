@@ -1,0 +1,13 @@
+networks:
+  core:
+    external: true
+
+services:
+  slavescale:
+    container_name: slavescale
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - core
+    restart: always
