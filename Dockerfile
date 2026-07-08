@@ -1,12 +1,8 @@
-FROM node:20-alpine AS build
+FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm install || true
+RUN npm install
 COPY . .
 RUN mkdir -p dist && cp index.html dist/
-
-FROM caddy:2.8-alpine
-COPY --from=build /app/dist /srv
-COPY ./Caddyfile /etc/caddy/Caddyfile
-EXPOSE 80
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+EXPOSE 3000
+CMD ["npm", "start"]

@@ -336,18 +336,25 @@
 
             async function loadLog() {
                 try {
-                    const r = await window.storage?.get(KEY);
-                    if (r && r.value) log = JSON.parse(r.value);
+                    const res = await fetch('/api/ratings');
+                    if (res.ok) log = await res.json();
                 } catch (e) {
-                    const stored = localStorage.getItem(KEY);
-                    if (stored) log = JSON.parse(stored);
+                    console.error('Could not load ratings', e);
                 }
             }
 
             async function saveLog() {
                 try {
-                    if (window.storage?.set) await window.storage.set(KEY, JSON.stringify(log));
-                    else localStorage.setItem(KEY, JSON.stringify(log));
+                    const date = todayKey();
+                    const entry = log[date];
+                    if (!entry) return;
+
+                    const res = await fetch('/api/ratings', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ date, ...entry })
+                    });
+                    if (!res.ok) throw new Error('Save failed');
                 } catch (e) {
                     console.error('Could not save', e);
                 }
