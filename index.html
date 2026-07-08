@@ -59,7 +59,7 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 560px;
+            max-width: 480px;
             opacity: 0;
             animation: rise 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
         }
@@ -75,21 +75,12 @@
             }
         }
 
-        .title {
-            font-weight: 500;
-            font-size: clamp(48px, 14vw, 80px);
-            line-height: 0.9;
-            text-align: center;
-            letter-spacing: 0.01em;
-            margin: 0 0 40px;
-            color: var(--ivory);
-        }
 
         .card {
             border: 1px solid rgba(201, 162, 91, 0.28);
             background: linear-gradient(180deg, rgba(58, 13, 26, 0.34), rgba(13, 9, 8, 0.34));
             border-radius: 3px;
-            padding: clamp(26px, 6vw, 40px) clamp(22px, 5vw, 36px);
+            padding: 24px 20px;
             box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(230, 200, 132, 0.08);
         }
 
@@ -224,7 +215,7 @@
         /* treasury */
         .treasury {
             text-align: center;
-            margin: 48px 0 44px;
+            margin: 32px 0 32px;
         }
 
         .treasury .total {
@@ -313,8 +304,6 @@
     </svg>
 
     <main class="page">
-        <h1 class="title">Devotion</h1>
-
         <section class="card" id="tonight" aria-live="polite"></section>
 
         <section class="treasury">
