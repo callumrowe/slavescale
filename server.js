@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const db = new Database('ratings.db');
+const dbPath = path.join(__dirname, 'data', 'ratings.db');
+const db = new Database(dbPath);
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ratings (

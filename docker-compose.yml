@@ -14,4 +14,4 @@ services:
     expose:
       - "3000"
     volumes:
-      - ./ratings.db:/app/ratings.db
+      - ./data:/app/data
